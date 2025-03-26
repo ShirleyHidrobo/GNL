@@ -1,114 +1,86 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   getnl.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: shhidrob <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/26 17:55:33 by shhidrob          #+#    #+#             */
+/*   Updated: 2025/03/26 20:44:32 by shhidrob         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-char readbuff(int fd, char *storage)
+char	*extract_line(char *buff)
 {
-    int i,
-    char *buffer;
+	char	*nl;
+	int	len;
+	char	*line;
+	int	i;
 
-    i = 1;
-    buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-    if (!buffer)
-        return (ft_free(&storage));
-    while(i > 0 && !ft_strchr(buffer, '\n'))
-    {
-        i = read(fd, buffer, BUFFER_SIZE);
-        if (i > 0)
-        {
-            buffer[i] = '\0';
-            storage = ft_strjoin(storage, buffer);
-        }
-    }
-    free(buffer);//free the buffer
-    if (i == -1)
-        return (ft_free(&storage));
-    return (storage);}
+	nl = ft_strchr(buff, '\n');
+	len = nl - buff + 1;
+	line = malloc(len + 1);
+	i = 0;
+	while (i < len)
+	{
+		line[i] = buff[i];
+		i++;
+	}
+	ft_memmove(buff, nl + 1, BUFFER_SIZE - len + 1);
+	return (line);
+}
 
+		
 
 
-char readbuff(int fd, char *storage)
+char *readbuff(int fd, char *buff)
 {
-    int rid;
-    char *buffer;
+    int 	rid;
+    char	*storage;
 
-    rid = 1;
-    buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-    if (!buffer)
-        return (ft_free(&storage));
     buffer[0] = '\0';
-    while (rid > 0 && !ft_strchr(buffer, '\n'))
+    rid = read(fd, buff, BUFFER_SIZE);
+    storage = NULL;
+    while (rid > 0 && !ft_strchr(buff, '\n'))
     {
-        rid = read(fd, buffer, BUFFER_SIZE);
         if (rid > 0)
         {
-            buffer[rid] = '\0';
-            storage = ft_strjoin(storage, buffer);
+            buff[rid] = '\0';
+	    if (storage == NULL)
+		    storage = ft_strdup(buff);
+	    else 
+            	storage = ft_strjoin(storage, buff);
         }
+        rid = read(fd, buff, BUFFER_SIZE);
     }
-    free(buffer);
-    if (rid == -1)
-        return (ft_free(&storage));
+    if (rid == 0)
+	    buff[0] = 0;
     return (storage);
 }
 
-
-/*size_t read(int fd, char *buf, size_t BUFFER_SIZE)
-{
-    size_t i;
-    char c;
-
-    i = 0;
-    while (i < BUFFER_SIZE)
-    {
-        if (read(fd, &c, 1) == 0)
-            return (i);
-        buf[i] = c;
-        i++;
-    }
-    return (i);
-}*/
-
-size_t read(int fd, char *buff, size_t BUFFER_SIZE)
-{
-    size_t i;
-    char c;
-
-    i = 0;
-    while( i < BUFFER_SIZE)
-    {
-        if (read(fd, &c, 1) == 0)
-            return (i); //if read returns 0 then we have reached the end of the file
-        buff[i] = c; //store the character in the buffer - no necesito inicializar c? o ya se inicializa con el valor de la lectura? &c es la direccion de c
-        if (buff[i] == '\n')
-            return (i);
-        i++;
-    }
-    return (i); //return the number of characters read
-}
+'0'
+'\0' == 0
 
 char *get_next_line(int fd)
 {
-    static char *storage; //line
-    char *buff; //buff
+    static char buff[BUFFER_SIZE + 1] = {0}; //line
     int r; //result of read
     int eof; //end of file
+	char	*storage;
+	char	*line;
 
-    if(fd < 0 || BUFFER_SIZE <= 0)
-        return (NULL);
-    storage = malloc(sizeof(char) * (BUFFER_SIZE + 1)); //need space to allocate whatever is in the buffer + 1 for the null terminator
-    if (!storage)
-        return (NULL); //if malloc fails return NULL
-    buff = malloc(sizeof(char) * (BUFFER_SIZE + 1)); //need space to allocate the number of BUFFER_SIZE is reading
-    if (!buf)
-        return (ft_free(&storage)); // if malloc fails free storage because there is no space to check what is read therefore nothing to be saved in storage 
-    r = read(fd, buff, BUFFER_SIZE); // read stuff into buffer
-    if (r == 0 || r == -1)
-        return (ft_free(&storage)); //nothing has been read, free whatever was in storage
-    if (r != BUFFER_SIZE)
-        eof = 1; //then we have reached eof at some point inside the buffer
-    buff[r] = '\0'; //null terminate the buffer - pero en strjoin ya se pone el null, y sino no seria r +1? osea el ultimo caracter +1 xq sino estaria reemplazando al ultimo caracter
-    storage = ft_strjoin(storage, buff); //join the buffer with the storage
-    free(buff); //free the buffer
-    return (storage); //return the storage
+   	if(fd < 0 || BUFFER_SIZE <= 0)
+       		return (NULL);
+    // storage = malloc(sizeof(char) * (BUFFER_SIZE + 1)); //need space to allocate the number of BUFFER_SIZE is reading
+    
+   	if (buff[0] == 0 || !ft_strchr(buff, '\n'))
+    		storage = readbuff(fd, buff);
+	line = extract_line(buff);
+   	storage = ft_strjoin(storage, line); //join the buffer with the storage
+	free(line);
+    	return (storage); //return the storage
 }
 
 int main(int argc, char **argv)
