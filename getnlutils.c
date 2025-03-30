@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getnlutils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shhidrob <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: shhidrob <shhidrob@student.42london.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 20:44:41 by shhidrob          #+#    #+#             */
-/*   Updated: 2025/03/28 19:49:51 by shhidrob         ###   ########.fr       */
+/*   Updated: 2025/03/30 14:58:43 by shhidrob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,34 @@ char *ft_strjoin(char *s1, char *s2)
     return (new_str);
 }
 
+char *ft_strnjoin(char *s1, char *s2,size_t n)
+{
+    char *new_str;
+    size_t i;
+    size_t j;
+
+    if (!s1 || !s2)
+        return (NULL);
+    new_str = malloc(sizeof(char) * (ft_strlen(s1) + n + 1));
+    if (!new_str)
+        return (NULL);
+    i = 0;
+    while (s1[i])
+    {
+        new_str[i] = s1[i];
+        i++;
+    }
+    j = 0;
+    while (j < n)
+    {
+        new_str[i] = s2[j]; //i + j to start from the end of s1 - maybe i + 1 to start from the end of s1 + '\0'
+        j++;
+	i++;
+    }
+    new_str[i] = '\0'; // it could be new_str[j + 1] = '\0';
+    free(s1); //free s1 because we are going to return new_str, free 2nd parameter in get_next_line
+    return (new_str);
+}
 /*char *ft_substr(char const *s, unsigned int start, size_t len)
 {
     char *new_str;
@@ -69,7 +97,7 @@ char *ft_strjoin(char *s1, char *s2)
     }
     new_str[i] = '\0';
     return (new_str);
-}*/
+i}*/
 
 void	*ft_memmove(void *dest, void *src, size_t n)
 {
@@ -77,17 +105,20 @@ void	*ft_memmove(void *dest, void *src, size_t n)
 	size_t	j;
 
 	i = 0;
-	if (src < dest)
-		while (n-- > 0)
-			((unsigned char *)dest)[n] = ((unsigned char*)src)[n];
-	else if (dest < src)
+	if (src == dest)
+		return (dest);
+    else if (dest < src)
 		while (i < n)
 		{
 			((unsigned char *)dest)[i] = ((unsigned char*)src)[i];
 			i++;
 		}
+	else if (src < dest)
+		while (n-- > 0)
+			((unsigned char *)dest)[n] = ((unsigned char*)src)[n];
+	
 	return (dest);
-}
+  }
 
 char	*ft_strdup(char *src)
 {
@@ -100,6 +131,25 @@ char	*ft_strdup(char *src)
 	if (dest == NULL)
 		return (NULL);
 	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	*ft_strndup(char *src, size_t n)
+{
+	char	*dest;
+	char	*s;
+	int		i;
+
+	i = 0;
+	dest = malloc((n + 1) * sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	while (i < n)
 	{
 		dest[i] = src[i];
 		i++;
