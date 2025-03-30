@@ -6,7 +6,7 @@
 /*   By: shhidrob <shhidrob@student.42london.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:38:21 by shhidrob          #+#    #+#             */
-/*   Updated: 2025/03/30 16:26:21 by shhidrob         ###   ########.fr       */
+/*   Updated: 2025/03/30 20:11:06 by shhidrob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 42
 
 # endif
 
@@ -25,7 +25,7 @@
 # include <string.h>
 
 char	*get_next_line(int fd);
-char	*readbuff(int fd, char *buff);
+char	*readbuff(int fd, char *buff, char *storage);
 char	*extract_line(char *buff);
 size_t	ft_strlen(char *s);
 char	*ft_strjoin(char *s1, char *s2);
