@@ -6,13 +6,13 @@
 /*   By: shhidrob <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 20:44:41 by shhidrob          #+#    #+#             */
-/*   Updated: 2025/03/26 20:44:44 by shhidrob         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:49:51 by shhidrob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t ft_strlen(const char *s)
+size_t ft_strlen(char *s)
 {
     size_t i;
 
@@ -74,15 +74,16 @@ char *ft_strjoin(char *s1, char *s2)
 void	*ft_memmove(void *dest, void *src, size_t n)
 {
 	size_t	i;
+	size_t	j;
 
 	i = 0;
 	if (src < dest)
 		while (n-- > 0)
-			dest[n] = src[n];
+			((unsigned char *)dest)[n] = ((unsigned char*)src)[n];
 	else if (dest < src)
 		while (i < n)
 		{
-			dest[i] = src[i];
+			((unsigned char *)dest)[i] = ((unsigned char*)src)[i];
 			i++;
 		}
 	return (dest);
@@ -107,7 +108,7 @@ char	*ft_strdup(char *src)
 	return (dest);
 }
 
-char *ft_strchr(const char *s, int c)
+char *ft_strchr(char *s, int c)
 {
     size_t i;
 

@@ -6,7 +6,7 @@
 /*   By: shhidrob <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:38:21 by shhidrob          #+#    #+#             */
-/*   Updated: 2025/03/26 20:45:30 by shhidrob         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:42:44 by shhidrob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,15 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
-typedef	struct s_list
-{
-	char			*str_buf;
-	struct s_list	*next;
-}				t_list;
-
-int		found_newline(t_list *list);
-_list	*find_last_node(t_list *list);
-char	*get_line(t_list *list);
-void	copy_str(t_list *list, char *str);
-int		len_to_newline(t_list *list);
-void	polish_list(t_list **list);
 char	*get_next_line(int fd);
-void	dealloc(t_list **list, t_list *clean_node, char *buf);
-void	create_list(t_list **list, int fd);
+char	*readbuff(int fd, char *buff);
+char	*extract_line(char *buff);
+size_t	ft_strlen(char *s);
+char	*ft_strjoin(char *s1, char *s2);
+void	*ft_memmove(void *dest, void *src, size_t n);
+char	*ft_strdup(char *src);
+char	*ft_strchr(char *s, int c);
 
 #endif
