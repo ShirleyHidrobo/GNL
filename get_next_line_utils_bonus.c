@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shhidrob <shhidrob@student.42london.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 20:44:41 by shhidrob          #+#    #+#             */
-/*   Updated: 2025/03/30 20:57:09 by shhidrob         ###   ########.fr       */
+/*   Updated: 2025/03/30 22:17:24 by shhidrob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (new_str);
 }
 
+#include <stdio.h>
 char	*ft_strnjoin(char *s1, char *s2, size_t n)
 {
 	char		*new_str;
@@ -49,6 +50,7 @@ char	*ft_strnjoin(char *s1, char *s2, size_t n)
 
 	if (!s1 || !s2)
 		return (NULL);
+	printf("%lu %lu\n", ft_strlen(s1), n);
 	new_str = malloc(sizeof(char) * (ft_strlen(s1) + n + 1));
 	if (!new_str)
 		return (NULL);
