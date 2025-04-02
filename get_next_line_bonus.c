@@ -6,13 +6,13 @@
 /*   By: shhidrob <shhidrob@student.42london.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:55:33 by shhidrob          #+#    #+#             */
-/*   Updated: 2025/03/30 22:52:02 by shhidrob         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:44:51 by shhidrob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "get_next_line.h"
-// #include "get_next_line_utils.c"
+#include "get_next_line_bonus.h"
+// #include "get_next_line_utils_bonus.c"
 
 size_t	ft_strlen(char *s)
 {

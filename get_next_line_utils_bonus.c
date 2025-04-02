@@ -6,11 +6,11 @@
 /*   By: shhidrob <shhidrob@student.42london.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 20:44:41 by shhidrob          #+#    #+#             */
-/*   Updated: 2025/03/30 22:17:24 by shhidrob         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:45:24 by shhidrob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strjoin(char *s1, char *s2)
 {
